@@ -1,0 +1,42 @@
+{
+    "name": "emilmoe/eloquence",
+    "type": "extension",
+    "description": "Extending the Laravel Eloquent framework.",
+    "license": "proprietary",
+    "authors": [{
+        "name": "Emil Moe",
+        "email": "emil@moegroup.dk",
+        "homepage": "https://moegroup.dk"
+    }],
+    "require": {
+        "illuminate/support": "~5.7",
+        "php": "~7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "EmilMoe\\Eloquence\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EmilMoe\\Eloquence\\EloquenceServiceProvider"
+            ]
+        },
+        "emilmoe": {
+            "autoloader": [
+            ]
+        }
+    }
+}
