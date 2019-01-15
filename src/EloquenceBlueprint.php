@@ -11,7 +11,7 @@ class EloquenceBlueprint extends Blueprint
      *
      * @return void
      */
-    public function tableLock(): void
+    public function lockable(): void
     {
         $this->boolean('is_locked')
             ->default(false);
@@ -25,5 +25,17 @@ class EloquenceBlueprint extends Blueprint
             ->references('id')
             ->on(config('auth.providers.users.model'))
             ->onDelete('restrict');
+    }
+
+    /**
+     * Drop lockable option.
+     *
+     * @return void
+     */
+    public function dropLockable(): void
+    {
+        $this->dropForeign('locked_by_id');
+        $this->dropColumn('locked_by_id');
+        $this->dropColumn('is_locked');
     }
 }
