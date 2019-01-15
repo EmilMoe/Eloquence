@@ -23,6 +23,10 @@ class EloquenceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $schema = DB::getSchemaBuilder();
+
+        $schema->blueprintResolver(function($table, $callback) {
+            return new EloquenceBlueprint($table, $callback);
+        });
     }
 }

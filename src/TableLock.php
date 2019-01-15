@@ -33,13 +33,13 @@ trait TableLock
         parent::boot();
 
         static::updating(function ($table) {
-            if ($table->isLocked() && ! $this->isSystemUser() && $table->ignore_locked !== true) {
+            if ($table->isLocked() && ! $this->isSystemUser() && $table->__ignore_locked !== true) {
                 throw new UpdatingLockedRecordException;
             }
         });
 
         static::deleting(function ($table) {
-            if ($table->isLocked() && ! $this->isSystemUser() && $table->ignore_locked !== true) {
+            if ($table->isLocked() && ! $this->isSystemUser() && $table->__ignore_locked !== true) {
                 throw new UpdatingLockedRecordException;
             }
         });
@@ -101,7 +101,7 @@ trait TableLock
      */
     public function scopeIgnoreLock($query)
     {
-        $query->addSelect(DB::raw("'ignore_locked' AS true"));
+        $query->addSelect(DB::raw("'__ignore_locked' AS true"));
     }
 
     /**
