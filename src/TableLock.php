@@ -77,6 +77,16 @@ trait TableLock
     }
 
     /**
+     * Get locked status as boolean.
+     *
+     * @return bool
+     */
+    public function getIsLockedAttribute(): bool
+    {
+        return $this->attributes['is_locked'] === 1;
+    }
+
+    /**
      * Does the record have locked columns.
      *
      * @return bool
