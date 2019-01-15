@@ -3,6 +3,7 @@
 namespace EmilMoe\Eloquence;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 class EloquenceServiceProvider extends ServiceProvider
 {
