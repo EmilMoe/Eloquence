@@ -83,7 +83,7 @@ trait TableLock
      */
     public function isLocked(): bool
     {
-        return $this->attributes['locked'];
+        return $this->attributes['is_locked'];
     }
 
     /**
