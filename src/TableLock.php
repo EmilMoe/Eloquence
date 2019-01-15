@@ -63,7 +63,7 @@ trait TableLock
             $this->attributes['locked_by_id'] = $user->id;
         }
 
-        $this->attributes['is_locked'] = true;
+        $this->attributes['locked'] = true;
         $this->save();
     }
 
@@ -73,7 +73,7 @@ trait TableLock
     public function unlock()
     {
         $this->attributes['locked_by_id'] = null;
-        $this->attributes['is_locked']    = false;
+        $this->attributes['locked']       = false;
         $this->save();
     }
 
@@ -82,9 +82,9 @@ trait TableLock
      *
      * @return bool
      */
-    public function getIsLockedAttribute(): bool
+    public function getLockedAttribute(): bool
     {
-        return $this->attributes['is_locked'] === 1;
+        return $this->attributes['locked'] === 1;
     }
 
     /**
@@ -94,7 +94,7 @@ trait TableLock
      */
     public function isLocked(): bool
     {
-        return $this->attributes['is_locked'];
+        return $this->locked;
     }
 
     /**

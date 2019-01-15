@@ -16,7 +16,7 @@ class EloquenceBlueprint
     {
         $userClass = config('auth.providers.users.model');
 
-        $table->boolean('is_locked')
+        $table->boolean('locked')
             ->default(false);
         
         $table->integer('locked_by_id')
@@ -40,6 +40,6 @@ class EloquenceBlueprint
     {
         $table->dropForeign('user_activity_locked_by_id_foreign');
         $table->dropColumn('locked_by_id');
-        $table->dropColumn('is_locked');
+        $table->dropColumn('locked');
     }
 }
