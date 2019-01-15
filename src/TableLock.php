@@ -3,6 +3,7 @@
 namespace EmilMoe\Eloquence;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use EmilMoe\Eloquence\Exceptions\UpdatingLockedRecordException;
 
 /**
@@ -33,13 +34,13 @@ trait TableLock
         parent::boot();
 
         static::updating(function ($table) {
-            if ($table->isLocked() && ! $this->isSystemUser() && $table->__ignore_locked !== true) {
+            if ($table->isLocked() && ! self::isSystemUser() && $table->__ignore_locked !== true) {
                 throw new UpdatingLockedRecordException;
             }
         });
 
         static::deleting(function ($table) {
-            if ($table->isLocked() && ! $this->isSystemUser() && $table->__ignore_locked !== true) {
+            if ($table->isLocked() && ! self::isSystemUser() && $table->__ignore_locked !== true) {
                 throw new UpdatingLockedRecordException;
             }
         });
@@ -122,7 +123,7 @@ trait TableLock
      *
      * @return bool
      */
-    private function isSystemUser(): bool
+    private static function isSystemUser(): bool
     {
         if (! method_exists(Auth::user(), 'isSystemUser')) {
             return false;
