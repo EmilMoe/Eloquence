@@ -1,6 +1,6 @@
 <?php
 
-namespace EmilMoe\Account\Exceptions;
+namespace EmilMoe\Eloquence\Exceptions;
 
 use Exception;
 
