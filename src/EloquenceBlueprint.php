@@ -4,24 +4,25 @@ namespace EmilMoe\Eloquence;
 
 use Illuminate\Database\Schema\Blueprint;
 
-class EloquenceBlueprint extends Blueprint
+class EloquenceBlueprint
 {
     /**
      * Add a locked columns for the table.
      *
+     * @param Schema $table
      * @return void
      */
-    public function lockable(): void
+    public static function lockable(Blueprint $table): void
     {
-        $this->boolean('is_locked')
+        $table->boolean('is_locked')
             ->default(false);
         
-        $this->integer('locked_by_id')
+        $table->integer('locked_by_id')
             ->unsigned()
             ->nullable()
             ->default(null);
         
-        $this->foreign('locked_by_id')
+        $table->foreign('locked_by_id')
             ->references('id')
             ->on(config('auth.providers.users.model'))
             ->onDelete('restrict');
@@ -30,12 +31,13 @@ class EloquenceBlueprint extends Blueprint
     /**
      * Drop lockable option.
      *
+     * @param Schema $table
      * @return void
      */
-    public function dropLockable(): void
+    public static function dropLockable(Blueprint $table): void
     {
-        $this->dropForeign('locked_by_id');
-        $this->dropColumn('locked_by_id');
-        $this->dropColumn('is_locked');
+        $table->dropForeign('locked_by_id');
+        $table->dropColumn('locked_by_id');
+        $table->dropColumn('is_locked');
     }
 }
