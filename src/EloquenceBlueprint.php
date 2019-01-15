@@ -14,6 +14,8 @@ class EloquenceBlueprint
      */
     public static function lockable(Blueprint $table): void
     {
+        $userClass = config('auth.providers.users.model');
+
         $table->boolean('is_locked')
             ->default(false);
         
@@ -24,7 +26,7 @@ class EloquenceBlueprint
         
         $table->foreign('locked_by_id')
             ->references('id')
-            ->on((new (config('auth.providers.users.model')))->getTable())
+            ->on(with(new $userClass)->getTable())
             ->onDelete('restrict');
     }
 
