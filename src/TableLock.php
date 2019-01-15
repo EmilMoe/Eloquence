@@ -52,7 +52,9 @@ trait TableLock
      */
     public function lock($user = null)
     {
-        if ($user && ! $user instanceof config('auth.providers.users.model')) {
+        $userClass = config('auth.providers.users.model');
+        
+        if ($user && ! $user instanceof $userClass) {
             abort(500, '$user must be instance of '. config('auth.providers.users.model'));
         }
 
