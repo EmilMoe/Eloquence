@@ -24,7 +24,7 @@ class EloquenceBlueprint
         
         $table->foreign('locked_by_id')
             ->references('id')
-            ->on(config('auth.providers.users.model'))
+            ->on((new (config('auth.providers.users.model')))->getTable())
             ->onDelete('restrict');
     }
 
@@ -36,7 +36,7 @@ class EloquenceBlueprint
      */
     public static function dropLockable(Blueprint $table): void
     {
-        $table->dropForeign('locked_by_id');
+        $table->dropForeign('user_activity_locked_by_id_foreign');
         $table->dropColumn('locked_by_id');
         $table->dropColumn('is_locked');
     }
