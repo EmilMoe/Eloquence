@@ -24,8 +24,6 @@ class UpdatingLockedRecordException extends Exception
      */
     public function render($request)
     {
-        return response()->json([
-            'message' => 'Trying to update locked column.'
-        ]);
+        //
     }
 }
