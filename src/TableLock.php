@@ -35,13 +35,13 @@ trait TableLock
 
         static::updating(function ($table) {
             if ($table->isLocked() && ! self::isSystemUser() && $table->__ignore_locked !== true) {
-                throw new UpdatingLockedRecordException;
+                throw new UpdatingLockedRecordException();
             }
         });
 
         static::deleting(function ($table) {
             if ($table->isLocked() && ! self::isSystemUser() && $table->__ignore_locked !== true) {
-                throw new UpdatingLockedRecordException;
+                throw new UpdatingLockedRecordException();
             }
         });
     }
