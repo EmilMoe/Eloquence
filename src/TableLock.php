@@ -35,7 +35,9 @@ trait TableLock
 
         static::updating(function ($table) {
             if ($table->isLocked() && ! self::isSystemUser() && $table->__ignore_locked !== true) {
-                throw new UpdatingLockedRecordException();
+                if (self::lockedAttributeChanged($table)) {
+                    throw new UpdatingLockedRecordException();
+                }
             }
         });
 
@@ -44,6 +46,16 @@ trait TableLock
                 throw new UpdatingLockedRecordException();
             }
         });
+    }
+
+    /**
+     * Expose lockable attributes.
+     *
+     * @return array
+     */
+    public function getLockables(): array
+    {
+        return $this->lockable;
     }
 
     /**
@@ -115,6 +127,23 @@ trait TableLock
     public function scopeIgnoreLock($query)
     {
         $query->addSelect(DB::raw("'__ignore_locked' AS true"));
+    }
+
+    /**
+     * 
+     */
+    private static function lockedAttributeChanged($model)
+    {
+        $lockTouched = false;
+
+        collect($model->getLockables())->first(function ($attribute) use (&$lockTouched, $model) {
+            if ($model->{$attribute} != $model->original[$attribute]) {
+                $lockTouched = true;
+                return;
+            }
+        });
+
+        return $lockTouched;
     }
 
     /**
