@@ -18,12 +18,12 @@ class EloquenceBlueprint
 
         $table->boolean('locked')
             ->default(false);
-        
-        $table->integer('locked_by_id')
+
+        $table->bigInteger('locked_by_id')
             ->unsigned()
             ->nullable()
             ->default(null);
-        
+
         $table->foreign('locked_by_id')
             ->references('id')
             ->on(with(new $userClass)->getTable())
