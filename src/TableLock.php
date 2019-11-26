@@ -96,7 +96,11 @@ trait TableLock
      */
     public function getLockedAttribute(): bool
     {
-        return self::find($this->id)->attributes['locked'];
+        if (isset($this->attributes['locked'])) {
+            return $this->attributes['locked'] === 1;
+        }
+
+        return self::find($this->id)->attributes['locked'] === 1;
     }
 
     /**
