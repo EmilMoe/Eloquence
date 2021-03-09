@@ -159,12 +159,18 @@ trait TableLock
     private static function isSystemUser(): bool
     {
         if (app()->runningInConsole()) {
-            return true;
+            if (! Auth::check()) {
+                return true;
+            }
         }
         
         $userClass = config('auth.providers.users.model');
 
         if (! method_exists($userClass, 'isSystemUser')) {
+            return false;
+        }
+        
+        if (! Auth::check()) {
             return false;
         }
 
